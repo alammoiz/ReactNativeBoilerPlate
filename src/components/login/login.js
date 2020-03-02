@@ -5,18 +5,22 @@ import {
   View,
   TextInput,
   Button,
+  ActivityIndicator,
   TouchableHighlight,
   Image,
   Alert,
 } from 'react-native';
 import {theme} from '../../themes/theme';
+import {apiService} from '../../shared/services/api.service';
 
-export default class Login extends Component {
+class Login extends Component {
   constructor(props) {
     super(props);
     this.state = {
       email: '',
       password: '',
+      loading: false,
+      dataSource: [],
     };
   }
 
@@ -24,14 +28,44 @@ export default class Login extends Component {
     Alert.alert('Alert', 'Button pressed ' + viewId);
   };
 
-  onTodoList = navigation => {
-    navigation.navigate('TODO');
+  onTodoList = async navigation => {
+    this.setState({
+      loading: true,
+    });
+    const response = await apiService.onFetch({
+      url: 'https://qaapi.modetrans.com/api/BookingDashboard/GetBookings',
+      method: 'POST',
+      payload: {
+        Filters: [
+          {
+            Type: 'ValueFilter',
+            Name: 'OffPageFilter',
+            ValueType: 'string',
+            Comparator: '',
+            Value: 'MyOfficeLoads',
+          },
+        ],
+        Pagination: {Offset: 0, Count: 25},
+      },
+    });
+
+    if (response.ok) {
+      navigation.navigate('TODO');
+      this.setState({
+        loading: false,
+      });
+    }
   };
 
   render() {
     const {navigation} = this.props;
     return (
       <View style={styles.container}>
+        {this.state.loading && (
+          <View style={styles.loader}>
+            <ActivityIndicator size="large" color="#0c9" />
+          </View>
+        )}
         <Image
           source={require('../../assets/images/signup_buckit_logo.png')}
           style={styles.logoImage}
@@ -123,3 +157,5 @@ const styles = StyleSheet.create({
     color: 'white',
   },
 });
+
+export default Login;

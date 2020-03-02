@@ -1,7 +1,6 @@
 import React from 'react';
-import {Body, CheckBox, ListItem} from 'native-base';
-import {Input, Button} from 'native-base';
-import Icon from 'react-native-vector-icons/FontAwesome';
+import {Body, ListItem} from 'native-base';
+import {Input} from 'native-base';
 
 export default class NewToDo extends React.Component {
   constructor(props) {
@@ -25,9 +24,6 @@ export default class NewToDo extends React.Component {
             onSubmitEditing={() => onPress(this.state)}
           />
         </Body>
-        {/*<Button transparent onPress={() => onCancel(false)}>
-          <Icon name="trash" size={30} color="#900" />
-        </Button>*/}
       </ListItem>
     );
   }
