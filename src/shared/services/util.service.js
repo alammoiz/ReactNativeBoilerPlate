@@ -11,12 +11,10 @@ function getValue(...param) {
   return get(...param);
 }
 
-function redirectToLogin(loginUrl = utilService.loginUrl) {
+function redirectToLogin(navigation) {
   console.log('Expire localStorage and logout');
-  /* let returnUrl = encodeURIComponent(
-    window.location.pathname.replace(/[//]+/, '') + window.location.search,
-  );*/
-  // utilService.redirectTo(loginUrl + '?returnUrl=' + returnUrl);
+  // navigation.popToTop();
+  // navigation.navigate('TODO');
 }
 
 function isEmpty(value) {

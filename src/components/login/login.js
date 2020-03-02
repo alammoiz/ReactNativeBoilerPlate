@@ -12,6 +12,7 @@ import {
 } from 'react-native';
 import {theme} from '../../themes/theme';
 import {apiService} from '../../shared/services/api.service';
+import {reactStorageService} from '../../shared/services/storage.service';
 
 class Login extends Component {
   constructor(props) {
@@ -28,7 +29,10 @@ class Login extends Component {
     Alert.alert('Alert', 'Button pressed ' + viewId);
   };
 
-  onTodoList = async navigation => {
+  onLoginClick = async navigation => {
+    // TODO: To get store data
+    const storageVariable = await reactStorageService.get('LOGIN');
+    console.log(storageVariable);
     this.setState({
       loading: true,
     });
@@ -50,6 +54,8 @@ class Login extends Component {
     });
 
     if (response.ok) {
+      // TODO: To save store data
+      await reactStorageService.set('LOGIN', 'LOGIN SUCCESSFULLY');
       navigation.navigate('TODO');
       this.setState({
         loading: false,
@@ -92,7 +98,7 @@ class Login extends Component {
 
         <TouchableHighlight
           style={[styles.buttonContainer, styles.loginButton]}
-          onPress={() => this.onTodoList(navigation)}>
+          onPress={() => this.onLoginClick(navigation)}>
           <Text style={styles.loginText}>Login</Text>
         </TouchableHighlight>
 
