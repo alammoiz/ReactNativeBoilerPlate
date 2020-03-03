@@ -64,7 +64,7 @@ const styles = StyleSheet.create({
   },
 });
 
-export default function Login(props) {
+const Login = props => {
   const {navigation} = props;
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -97,7 +97,6 @@ export default function Login(props) {
         Pagination: {Offset: 0, Count: 25},
       },
     });
-
 
     if (response.ok) {
       // TODO: To save store data
@@ -153,4 +152,6 @@ export default function Login(props) {
       </TouchableHighlight>
     </View>
   );
-}
+};
+
+export default Login;
