@@ -20,7 +20,7 @@ async function onFetch(options) {
 }
 
 function handleResponse(response) {
-  const mutatedReponse = {
+  const mutatedResponse = {
     status: response.Response.Code,
     ok: response.Response.Code === 200,
     response: {
@@ -39,9 +39,9 @@ function handleResponse(response) {
     return;
   }
   if (response.Response.Code === 200) {
-    return {...mutatedReponse, data};
+    return {...mutatedResponse, data};
   } else {
-    return {...mutatedReponse, data: !utilService.isEmpty(data) ? data : null};
+    return {...mutatedResponse, data: !utilService.isEmpty(data) ? data : null};
   }
 }
 
