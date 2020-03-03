@@ -11,12 +11,6 @@ import {
 } from '../../../store/reducers/todo_reducer';
 
 const ToDoAll = props => {
-  /*constructor(props) {
-    super(props);
-    this.state = {
-      newTodo: false,
-    };
-  }*/
   const [newTodo, showNewToDo] = useState(false);
   const {todos, isShowNewTodo, screen, deleteTodo, updateTodo} = props;
 
