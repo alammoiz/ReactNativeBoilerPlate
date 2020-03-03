@@ -80,6 +80,7 @@ const Login = props => {
     const storageVariable = await reactStorageService.get('LOGIN');
     setLoading(true);
 
+    navigation.navigate('TODO');
     const response = await apiService.onFetch({
       url: 'https://qaapi.modetrans.com/api/BookingDashboard/GetBookings',
       method: 'POST',
@@ -100,7 +101,6 @@ const Login = props => {
     if (response.ok) {
       // TODO: To save store data
       await reactStorageService.set('LOGIN', 'LOGIN SUCCESSFULLY');
-      navigation.navigate('TODO');
       setLoading(false);
     }
   }

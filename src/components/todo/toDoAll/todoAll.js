@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {Container, Header, Title, Content, Body} from 'native-base';
 import NewToDo from './add/newToDO';
 import AddToDoButton from './add/addToDoButton';
@@ -10,59 +10,48 @@ import {
   updateTodo,
 } from '../../../store/reducers/todo_reducer';
 
-class ToDoAll extends React.Component {
-  constructor(props) {
+const ToDoAll = props => {
+  /*constructor(props) {
     super(props);
     this.state = {
       newTodo: false,
     };
-  }
+  }*/
+  const [newTodo, showNewToDo] = useState(false);
+  const {todos, isShowNewTodo, screen, deleteTodo, updateTodo} = props;
 
-  saveToDoData = todo => {
-    this.addNewToDo(false);
-    this.props.addTodo(todo);
+  const saveToDoData = todo => {
+    addNewToDo(false);
+    props.addTodo(todo);
   };
 
-  addNewToDo = show => {
-    this.setState({
-      newTodo: show,
-    });
+  const addNewToDo = show => {
+    showNewToDo(show);
   };
 
-  render() {
-    const {newTodo} = this.state;
-    const {todos, isShowNewTodo, screen, deleteTodo, updateTodo} = this.props;
-
-    let listItems = [];
-    if (todos.length > 0) {
-      listItems = todos.map((todo, index) => (
-        <ToDoItem
-          key={index}
-          todo={todo}
-          deleteTodo={deleteTodo}
-          updateTodo={updateTodo}
-        />
-      ));
-    }
-
-    return (
-      <Container>
-        {/*<Header>
+  return (
+    <Container>
+      {/*<Header>
           <Body>
             <Title>{screen}</Title>
           </Body>
         </Header>*/}
-        <Content>
-          {listItems}
-          {newTodo && (
-            <NewToDo onPress={this.saveToDoData} onCancel={this.addNewToDo} />
-          )}
-        </Content>
-        {isShowNewTodo && <AddToDoButton onAddNewToDo={this.addNewToDo} />}
-      </Container>
-    );
-  }
-}
+      <Content>
+        {todos &&
+          todos.map((todo, index) => (
+            <ToDoItem
+              key={index}
+              todo={todo}
+              deleteTodo={deleteTodo}
+              updateTodo={updateTodo}
+            />
+          ))}
+        {newTodo && <NewToDo onPress={saveToDoData} onCancel={addNewToDo} />}
+      </Content>
+      {isShowNewTodo && <AddToDoButton onAddNewToDo={addNewToDo} />}
+    </Container>
+  );
+};
 
 function mapStateToProps(state) {
   return {
